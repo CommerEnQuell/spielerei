@@ -1,0 +1,72 @@
+<div class="container">
+	<div class="row">
+		<div class="col-xs-12">
+			<h3>Event: {{ registration.eventId }} d.d. {{ registration.eventTime }}</h3>
+		</div>
+		<div class="col-xs-11 col-xs-offset-1">
+			<div class="col-xs-3">
+				Latitude: <b>{{ registration.latitude }}</b>&deg;<br>
+				Longitude: <b>{{ registration.longitude }}</b>&deg;
+			</div>
+			<div class="col-xs-1"></div>
+			<div class="col-xs-3">
+				Magnitude: <b>{{ registration.magnitude }}</b><br>
+				Type: <b>{{ registration.magnitudeType }}</b>
+			</div>
+			<div class="col-xs-1"></div>
+			<div class="col-xs-3">
+				Depth: <b>{{ registration.depth }}</b> km
+			</div>
+		</div>
+	</div>
+	<div class="row"
+	     *ngFor="let station of registration.stations; let i = index">
+		<div class="col-xs-11 col-xs-offset-1">
+			<h4>Station: {{ station.stationCode }} ({{ station.networkCode }})</h4>
+			<div class="col-xs-3">
+				<h5>Station</h5>
+				Latitude: <b>{{ station.latitude }}</b>&deg;<br>
+				Longitude: <b>{{ station.longitude }}</b>&deg;<br>
+				Elevation: <b>{{ station.elevation }}</b> m
+				<p>
+				   <span class="nonmeta">
+				      Epicentral Distance: <b>{{ registration.stationEvents[i].epicentralDistance }}</b> km<br>
+				      Location Ref.: <b>{{ registration.stationEvents[i].locationRef }}</b><br>
+				      Magnitude Ref.: <b>{{ registration.stationEvents[i].magnitudeRef }}</b><br>
+				      Review Type: <b>{{ registration.stationEvents[i].reviewType }}</b>
+				   </span>
+				</p>
+			</div>
+			<div class="col-xs-1"></div>
+			<div class="col-xs-3">
+				<h5>Channel {{ station.channels[0].channelCode }}</h5>
+				Azimuth: <b>{{ station.channels[0].azimuth }}</b><br>
+				Depth: <b>{{ station.channels[0].depth }}</b><br>
+				Dip: <b>{{ station.channels[0].dip }}</b>
+				<p>
+				   <span class="nonmeta">
+				      PGA Value: <b>{{ registration.stationEvents[i].channelEvents[0].pgaValue }}</b><br>
+				      PGV Value: <b>{{ registration.stationEvents[i].channelEvents[0].pgvValue }}</b><br>
+				      Low Cut Corner: <b>{{ registration.stationEvents[i].channelEvents[0].lowCutCorner }}</b>&deg;<br>
+				      High Cut Corner: <b>{{ registration.stationEvents[i].channelEvents[0].highCutCorner }}</b>&deg;
+				   </span>
+				</p>
+			</div>
+			<div class="col-xs-1"></div>
+			<div class="col-xs-3">
+				<h5>Channel {{ station.channels[1].channelCode }}</h5>
+				Azimuth: <b>{{ station.channels[1].azimuth }}</b><br>
+				Depth: <b>{{ station.channels[1].depth }}</b><br>
+				Dip: <b>{{ station.channels[1].dip }}</b>
+				<p>
+				   <span class="nonmeta">
+				      PGA Value: <b>{{ registration.stationEvents[i].channelEvents[1].pgaValue }}</b><br>
+				      PGV Value: <b>{{ registration.stationEvents[i].channelEvents[1].pgvValue }}</b><br>
+				      Low Cut Corner: <b>{{ registration.stationEvents[i].channelEvents[1].lowCutCorner }}</b>&deg;<br>
+				      High Cut Corner: <b>{{ registration.stationEvents[i].channelEvents[1].highCutCorner }}</b>&deg;
+				   </span>
+				</p>
+			</div>
+		</div>
+	</div>
+</div>

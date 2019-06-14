@@ -8,7 +8,42 @@
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <link rel="icon" type="image/x-icon" href="favicon.ico">
 </head>
-<body>
+<body onload="getLocation()">
   <app-root></app-root>
+  <p hidden id="latText"></p>
+  <p hidden id="latitude"></p>
+  <p hidden id="longText"></p>
+  <p hidden id="longitude"></p>
+  <script>
+	  var ltt = document.getElementById("latText");
+	  var lte = document.getElementById("latitude");
+	  var lgt = document.getElementById("longText");
+	  var lge = document.getElementById("longitude");
+	
+	  function getLocation() {
+	    if (navigator.geolocation) {
+	      navigator.geolocation.getCurrentPosition(showPosition);
+	    } else { 
+	   	  ltt.innerHtml = "Location:";
+	   	  lgt.innerHtml = "Anywhere"
+		  console.log('Geo location set to ' + s);
+		  x.innerHTML = s;
+	    }
+	  }
+	
+	  function showPosition(position) {
+		ltt.innerHTML = "Latitude:";
+		lte.innerHTML = Math.round(1000000 * position.coords.latitude) / 1000000;
+		lgt.innerHTML = "Longitude:"; 
+		lge.innerHTML = Math.round(1000000 * position.coords.longitude) / 1000000;
+		console.log("Position set to (" + lte.innerHTML + ", " + lge.innerHTML + ")");
+	  }
+  </script>
+
+<!--
+		<script defer="defer">
+			document.getElementById("whereami").innerHTML = document.getElementById("geo").innerHtml;
+		</script>
+-->
 </body>
 </html>

@@ -1,0 +1,171 @@
+<div class="container">
+   <div class="row">
+      <div class="col-xs-12 col-sm-10">
+         <h1>{{ soort }}overzicht {{ data }}</h1>
+         <hr>
+         <table>
+            <colgroup>
+               <col span="1">
+               <col span="4" style="background-color: #ffd0d0">
+               <col span="5" style="background-color: #d0d0ff">
+               <col span="3" style="background-color: #ffff40">
+               <col span="1" style="background-color: #d0d0d0">
+               <col span="3" style="background-color: #a0a0ff">
+               <col span="3" style="background-color: #a0ffa0">
+               <col span="2" style="background-color: #ffa0ff">
+               <col span="3" style="background-color: #70a0ff">
+           </colgroup>
+            <thead>
+               <tr>
+               	  <th></th>
+                  <th colspan="4">Temperatuur</th>
+                  <th colspan="5">Wind</th>
+                  <th colspan="3">Zon</th>
+                  <th>Bew.</th>
+                  <th colspan="3">Neerslag</th>
+                  <th colspan="3">Luchtdruk</th>
+                  <th colspan="2">Zicht</th>
+                  <th colspan="3">Vochtigheid</th>
+               </tr>
+               <tr>
+                  <th>{{ spec }}</th>
+                  <!--  Temperatuur -->
+                  <th>Gem<br>&deg;C</th>
+                  <th>Max<br>&deg;C</th>
+                  <th>Min<br>&deg;C</th>
+                  <th>10cm<br>&deg;C</th>
+                  
+                  <!--  Wind -->
+                  <th>Richting</th>
+                  <th>Gem<br>m/s</th>
+                  <th>Max<sub>h</sub><br>m/s</th>
+                  <th>Min<sub>h</sub><br>m/s</th>
+                  <th>Stoot<br>m/s</th>
+                  
+                  <!--  Zon -->
+                  <th>Duur<br>uur</th>
+                  <th>Perc.</th>
+                  <th>Straling<br>J/cm<sup>2</sup></th>
+                  
+                  <!-- Bewolking -->
+                  <th>Octa</th>
+                  
+                  <!--  Neerslag -->
+                  <th>Som<br>mm</th>
+                  <th>Duur<br>uur</th>
+                  <th>Max<sub>h</sub><br>mm</th>
+                  
+                  <!-- Luchtdruk -->
+                  <th>Gem<br>hPa</th>
+                  <th>Max<br>hPa</th>
+                  <th>Min<br>hPa</th>
+                  
+                  <!-- Zicht -->
+                  <th>Max</th>
+                  <th>Min</th>
+                  
+                  <!-- Relatieve Vochtigheid -->
+                  <th>Gem<br>%</th>
+                  <th>Max<br>%</th>
+                  <th>Min<br>%</th>
+               </tr>
+            </thead>
+            <tbody>
+			   <tr *ngFor="let dgw of repository.maandwaarden; let idx = index">
+			      <td>
+			         <span *ngIf="repository.soortOverzicht == 3">{{ dgw.dag }}</span>
+			         <span *ngIf="repository.soortOverzicht != 3">{{ dgw.jaar }}</span>
+			      </td>
+			      
+			      <!-- Temperatuur -->
+			      <td *ngIf="utils.isTempModified(dgw.gemTemperatuur, dgw.gemTemperatuurGefuckt)">
+			         <ruby>
+			            <rt>{{ dgw.gemTemperatuur }}</rt>
+			            {{ dgw.gemTemperatuurGefuckt }}
+			         </ruby>
+			      </td>
+			      <td *ngIf="!utils.isTempModified(dgw.gemTemperatuur, dgw.gemTemperatuurGefuckt)">
+			         {{ dgw.gemTemperatuur }}
+			      </td>
+
+			      <td *ngIf="utils.isTempModified(dgw.maxTemperatuur, dgw.maxTemperatuurGefuckt)">
+			         <ruby>
+			            <rt>{{ dgw.maxTemperatuur }}</rt>
+			            {{ dgw.maxTemperatuurGefuckt }}
+			         </ruby>
+			      </td>
+			      <td *ngIf="!utils.isTempModified(dgw.maxTemperatuur, dgw.maxTemperatuurGefuckt)">
+			         {{ dgw.maxTemperatuur }}
+			      </td>
+
+			      <td *ngIf="utils.isTempModified(dgw.minTemperatuur, dgw.minTemperatuurGefuckt)">
+			         <ruby>
+			            <rt>{{ dgw.minTemperatuur }}</rt>
+			            {{ dgw.minTemperatuurGefuckt }}
+			         </ruby>
+			      </td>
+			      <td *ngIf="!utils.isTempModified(dgw.minTemperatuur, dgw.minTemperatuurGefuckt)">
+			         {{ dgw.minTemperatuur }}
+			      </td>
+			      
+			      <td>
+			          <span *ngIf="dgw.minGrondTemperatuur != null">
+			            {{ dgw.minGrondTemperatuur }}
+			          </span>
+			      </td>
+			      
+			      <td>
+			         <span *ngIf="dgw.windrichting != null">
+			         	{{ utils.windrichting(dgw.windrichting) }}
+			         </span>
+			      </td>
+			      <td>
+			         <span *ngIf="dgw.gemWindsnelheid != null">
+			         	{{ dgw.gemWindsnelheid }}
+			         </span>
+			      </td>
+			      <td>
+			         <span *ngIf="dgw.maxWindsnelheid != null">
+			         	{{ dgw.maxWindsnelheid }}
+			         </span>
+			      </td>
+			      <td>
+			         <span *ngIf="dgw.minWindsnelheid != null">
+			         	{{ dgw.minWindsnelheid }}
+			         </span>
+			      </td>
+			      <td>
+			         <span *ngIf="dgw.maxWindstoot != null">
+			         	{{ dgw.maxWindstoot }}
+			         </span>
+			      </td>
+
+			      <td>{{ dgw.duurZon }}</td>
+			      <td>{{ dgw.percZon }}</td>
+			      <td><span *ngIf="dgw.straling != null">{{ dgw.straling }}</span></td>
+			      
+			      <td><span *ngIf="dgw.bewolking != null">{{ dgw.bewolking }}</span></td>
+			      
+			      <td><span *ngIf="dgw.somNeerslag != null">{{ utils.neerslagsom(dgw.somNeerslag) }}</span>
+			      <td><span *ngIf="dgw.duurNeerslag != null">{{ dgw.duurNeerslag }}</span>
+			      <td><span *ngIf="dgw.maxUursomNeerslag != null">{{ utils.neerslagsom(dgw.maxUursomNeerslag) }}</span>
+			      
+			      <td><span *ngIf="dgw.gemLuchtdrukZeeniveau != null">{{ dgw.gemLuchtdrukZeeniveau }}</span>
+			      <td><span *ngIf="dgw.maxLuchtdrukZeeniveau != null">{{ dgw.maxLuchtdrukZeeniveau }}</span>
+			      <td><span *ngIf="dgw.minLuchtdrukZeeniveau != null">{{ dgw.minLuchtdrukZeeniveau }}</span>
+
+			      <td><span *ngIf="dgw.maxZicht != null">{{ dgw.maxZicht }}</span>
+			      <td><span *ngIf="dgw.minZicht != null">{{ dgw.minZicht }}</span>
+			      
+			      <td>{{ dgw.gemRelVocht }}</td>
+			      <td><span *ngIf="dgw.maxRelVocht != null">{{ dgw.maxRelVocht }}</span>
+			      <td><span *ngIf="dgw.minRelVocht != null">{{ dgw.minRelVocht }}</span>
+			      
+			      
+			   </tr>
+             
+            </tbody>
+         </table>
+      </div>
+   </div>
+</div>

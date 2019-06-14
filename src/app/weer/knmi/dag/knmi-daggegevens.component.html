@@ -1,0 +1,196 @@
+<div class="row">
+	<div class="col-xs-12 col-sm-10">
+	    <div class="row">
+	    	<h1 align="center" *ngIf="daggegevens != null && daggegevens.julDatum != null">Het weer op {{ utils.datumStr(daggegevens.julDatum, daggegevens.dag, daggegevens.maand, daggegevens.jaar) }}</h1>
+	    	<hr>
+	    </div>
+	   	<div class="row">
+	   		<div class="col-xs-5 col-sm-4">
+	   			<img id="portrait" src="http://localhost:1854/v1/api/knmi/images/knmi-logo.png">
+	   		</div>
+	   		<div class="col-xs-1 col-sm-1"></div>
+	   		<div class="col-xs-6 col-sm-5" *ngIf="daggegevens != null && daggegevens.maxTemperatuur != null">
+	   			<h3>Temperatuur</h3>
+	   			<table>
+	   			   <tr>
+	   				  <td>Maximum:</td>
+	   				  <td> 
+	   			   	     <span *ngIf="!modified"><b>{{ daggegevens.maxTemperatuur }}</b>&deg;C</span>
+	   			         <span *ngIf="modified"><b>{{ daggegevens.maxTemperatuurGefuckt }}</b>&deg;C (gemeten: <b>{{ daggegevens.maxTemperatuur }}</b>&deg;C)</span>
+	   			      </td>
+	   			      <td>
+	   			         <span *ngIf="daggegevens.maxTemperatuurUur != null"> in het <b>{{ daggegevens.maxTemperatuurUur }}</b><sup>e</sup> uur</span>
+	   			      </td>
+	   			   </tr>
+	   			   <tr>
+	   			      <td>Gemiddeld:</td>
+	   			      <td colspan="2"> 
+	   			         <span *ngIf="!modified"><b>{{ daggegevens.gemTemperatuur }}</b>&deg;C</span>
+	   			         <span *ngIf="modified"><b>{{ daggegevens.gemTemperatuurGefuckt }}</b>&deg;C (o.b.v. gemeten waarden: <b>{{ daggegevens.gemTemperatuur }}</b>&deg;C)</span>
+	   			      </td>
+	   			   </tr>
+	   			   <tr>
+	   			      <td>Minimum:</td> 
+	   			      <td>
+	   			         <span *ngIf="!modified"><b>{{ daggegevens.minTemperatuur }}</b>&deg;C</span>
+	   			         <span *ngIf="modified"><b>{{ daggegevens.minTemperatuurGefuckt }}</b>&deg;C (gemeten: <b>{{ daggegevens.minTemperatuur }}</b>&deg;C)</span>
+	   			      </td>
+	   			      <td>
+	   			         <span *ngIf="daggegevens.minTemperatuurUur != null"> in het <b>{{ daggegevens.minTemperatuurUur }}</b><sup>e</sup> uur</span>
+	   			      </td>
+	   			</tr>
+	   			<tr>
+	   			   <td colspan="3">	
+	   			      <span *ngIf="modified">
+	   					 <h4 class="btn-warning">Temperatuurgegevens zijn gemanipuleerd</h4>
+	   			      </span>
+	   			   </td>
+	   			</tr>
+	   			<tr *ngIf="daggegevens.minGrondTemperatuur != null">
+	   			   <td>Minimum op 10 cm:</td>
+	   			   <td><b>{{ daggegevens.minGrondTemperatuur }}</b>&deg;C</td>
+	   			   <td>
+	   				  <span *ngIf="daggegevens.minGrondTemperatuurUur != null">
+                         in het <b>{{ daggegevens.minGrondTemperatuurUur }}</b><sup>e</sup> uur
+                      </span>
+	   			   </td>
+	   			</table>
+	   		</div>
+	   	</div>
+	   	<div class="row">
+	   	   <div class="col-xs-6 col-sm-5" *ngIf="daggegevens.windrichting != null">
+	   	      <h3>Wind</h3>
+	   	      <table>
+	   	         <tr>
+	   	            <td>Windrichting:</td>
+	   	            <td><b>{{ utils.windrichting(daggegevens.windrichting) }}</b>
+	   	         </tr>
+	   	         <tr>
+	   	            <td>Gem. Windsnelheid:</td>
+	   	            <td colspan="2"><b>{{ daggegevens.gemWindsnelheid }}</b> m/s</td>
+	   	         </tr>
+	   	         <tr>
+	   	            <td>Max. Windsnelheid:</td>
+	   	            <td><b>{{ daggegevens.maxWindsnelheid }}</b> m/s</td>
+					<td *ngIf="daggegevens.maxWindsnelheidUur != null">
+					   in het <b>{{ daggegevens.maxWindsnelheidUur }}</b><sup>e</sup> uur
+					</td>
+	   	         </tr>
+	   	         <tr>
+	   	            <td>Min. Windsnelheid:</td>
+	   	            <td><b>{{ daggegevens.minWindsnelheid }}</b> m/s</td>
+					<td *ngIf="daggegevens.minWindsnelheidUur != null">
+					   in het <b>{{ daggegevens.minWindsnelheidUur }}</b><sup>e</sup> uur
+					</td>
+	   	         </tr>
+	   	         <tr *ngIf="daggegevens.maxWindstoot != null">
+	   	            <td>Max. Windstoot:</td>
+	   	            <td><b>{{ daggegevens.maxWindstoot }}</b> m/s</td>
+					<td *ngIf="daggegevens.maxWindstootUur != null">
+					   in het <b>{{ daggegevens.maxWindstootUur }}</b><sup>e</sup> uur
+					</td>
+	   	         </tr>
+	   	      </table>
+	   	   </div>
+	   	   <div class="col-xs-6 col-sm-5" *ngIf="daggegevens.duurZon != null">
+	   	      <h3>Zon / Bewolking / Zicht</h3>
+	   	      <table>
+	   	         <tr>
+	   	            <td>Zonneschijn:</td>
+	   	            <td><b>{{ utils.neerslagsom(daggegevens.duurZon) }}</b> uur (<b>{{ daggegevens.percZon }}</b>%)</td>
+	   	        </tr>
+	   	        <tr *ngIf="daggegevens.straling != null">
+	   	           <td>Globale Straling:</td>
+	   	           <td><b>{{ daggegevens.straling }}</b> J/cm<sup>2</sup></td>
+	   	        </tr>
+	   	        <tr *ngIf="daggegevens.bewolking != null">
+	   	           <td>Bewolking:</td>
+	   	           <td><b>{{ daggegevens.bewolking }}</b> octa's</td>
+	   	        </tr>
+	   	        <tr *ngIf="daggegevens.minZicht != null && daggegevens.minZicht != ''">
+	   	           <td>Minimaal Zicht:</td>
+	   	           <td><b>{{ daggegevens.minZicht }}</b></td>
+	   	           <td *ngIf="daggegevens.minZichtUur != null">in het <b>{{ daggegevens.minZichtUur }}</b><sup>e</sup> uur</td>
+	   	        </tr>
+	   	        <tr *ngIf="daggegevens.maxZicht != null && daggegevens.maxZicht != ''">
+	   	           <td>Maximaal Zicht:</td>
+	   	           <td><b>{{ daggegevens.maxZicht }}</b></td>
+	   	           <td *ngIf="daggegevens.maxZichtUur != null">in het <b>{{ daggegevens.maxZichtUur }}</b><sup>e</sup> uur</td>
+	   	        </tr>
+	   	      </table>
+	   	   </div>
+	   	</div>
+	   	<div class="row">
+	   	   <div class="col-xs-6 col-sm-5" *ngIf="daggegevens.somNeerslag != null">
+	   	      <h3>Neerslag</h3>
+	   	      <table>
+	   	         <tr>
+	   	            <td>Neerslagsom:</td>
+	   	            <td><b>{{ utils.neerslagsom(daggegevens.somNeerslag) }}</b> mm</td>
+	   	         </tr>
+	   	         <tr *ngIf="daggegevens.duurNeerslag != null">
+	   	            <td>Duur:</td>
+	   	            <td><b>{{ daggegevens.duurNeerslag }}</b> uur</td>
+	   	         </tr>
+	   	         <tr>
+	   	         	<td>Max. Uursom:</td>
+	   	         	<td>
+	   	         	   <b>{{ utils.neerslagsom(daggegevens.maxUursomNeerslag) }}</b> mm
+	   	         	   <span *ngIf="daggegevens.somNeerslag != 0 && daggegevens.uurMaxNeerslag != null"> in het <b>{{ daggegevens.uurMaxNeerslag }}</b><sup>e</sup> uur</span>
+	   	         	</td>
+	   	         </tr>
+	   	      </table>
+	   	   </div>
+	   	   <div class="col-xs-6 col-sm-5" *ngIf="daggegevens.gemLuchtdrukZeeniveau != null">
+	   	      <h3>Luchtdruk (op zeeniveau)</h3>
+	   	      <tr>
+	   	         <td>Gemiddelde Luchtdruk:</td>
+	   	         <td>
+	   	             <b>{{ daggegevens.gemLuchtdrukZeeniveau }}</b> hPa
+	   	         </td>
+	   	      </tr>
+	   	      <tr>
+	   	         <td>Maximale Uurwaarde:</td>
+	   	         <td>
+	   	             <b>{{ daggegevens.maxLuchtdrukZeeniveau }}</b> hPa
+	   	             <span *ngIf="daggegevens.maxLuchtdrukUur != null"> in het <b>{{ daggegevens.maxLuchtdrukUur }}</b><sup>e</sup> uur</span>
+	   	         </td>
+	   	      </tr>
+	   	      <tr>
+	   	         <td>Minimale Uurwaarde:</td>
+	   	         <td>
+	   	             <b>{{ daggegevens.minLuchtdrukZeeniveau }}</b> hPa
+	   	             <span *ngIf="daggegevens.minLuchtdrukUur != null"> in het <b>{{ daggegevens.minLuchtdrukUur }}</b><sup>e</sup> uur</span>
+	   	         </td>
+	   	      </tr>
+	   	   </div>
+	   	</div>
+	   	<div class="row">
+	   	   <div class="col-xs-6 col-sm-5"  *ngIf="daggegevens.gemRelVocht != null">
+	   	      <h3>Relatieve Vochtigheid</h3>
+	   	      <table>
+	   	         <tr>
+	   	            <td>Gemiddeld:</td>
+	   	            <td><b>{{ daggegevens.gemRelVocht }}</b>%</td>
+	   	         </tr>
+	   	         <tr *ngIf="daggegevens.maxRelVocht != null">
+	   	            <td>Maximum:</td>
+	   	            <td>
+	   	               <b>{{ daggegevens.maxRelVocht }}</b>%
+	   	               <span *ngIf="daggegevens.maxRelVochtUur != null"> in het <b>{{ daggegevens.maxRelVochtUur }}</b><sup>e</sup> uur</span>
+	   	            </td>
+	   	         </tr>
+	   	         <tr *ngIf="daggegevens.minRelVocht != null">
+	   	            <td>Minimum:</td>
+	   	            <td>
+	   	               <b>{{ daggegevens.minRelVocht }}</b>%
+	   	               <span *ngIf="daggegevens.minRelVochtUur != null"> in het <b>{{ daggegevens.minRelVochtUur }}</b><sup>e</sup> uur</span>
+	   	            </td>
+	   	         </tr>
+	   	      </table>
+	   	   </div>
+	   	   <div class="col-xs-6 col-sm-5">
+	   	   </div>
+	   	</div>
+	</div>
+</div>

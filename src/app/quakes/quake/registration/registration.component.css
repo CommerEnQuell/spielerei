@@ -1,0 +1,17 @@
+h3 {
+	background-color: #005a20;
+	color: white;
+}
+
+h4 {
+	background-color: #5e92d9;
+}
+
+h5 {
+	background-color: #ead855;
+	font-size: 14pt;
+}
+
+.nonmeta {
+	color: #800404;
+}

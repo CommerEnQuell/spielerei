@@ -1,0 +1,70 @@
+<div class="row">
+    <div class="col-xs-12">
+        <form [formGroup]="quakesQueryForm">
+        	<div class="row">
+        		<div class="col-xs-5">
+        			<div class="form-group">
+        				<label for="eventId">Event id.</label>
+        				<input type="text"
+        				       id="eventId"
+        				       formControlName="eventId"
+        				       class="form-control">
+        			</div>
+        		</div>
+        		<div class="col-xs-2"></div>
+         		<div class="col-xs-5">
+        			<div class="form-group">
+        				<label for="station">Station</label>
+        				<input type="text"
+        				       id="station"
+        				       formControlName="station"
+        				       class="form-control">
+        			</div>
+        		</div>
+        	</div>
+        	<div class="row">
+        		<div class="col-xs-5">
+        			<div class="form-group">
+        				<label for="dateFrom">From date</label>
+        				<input type="date"
+        				       id="dateFrom"
+        				       formControlName="dateFrom"
+        				       class="form-control">
+        			</div>
+        		</div>
+        		<div class="col-xs-2"></div>
+         		<div class="col-xs-5">
+        			<div class="form-group">
+        				<label for="dateTo">To date</label>
+        				<input type="date"
+        				       id="dateTo"
+        				       formControlName="dateTo"
+        				       class="form-control">
+        			</div>
+        		</div>
+        	</div>
+         	<div class="row">
+        		<div class="col-xs-12">
+        			<div class="form-group">
+        				<label for="minMagnitude">Min. Magnitude</label>
+        				<input type="text"
+        				       id="minMagnitude"
+        				       formControlName="minMagnitude"
+        				       class="form-control">
+        			</div>
+        		</div>
+       		</div>
+       		<div class="row">
+       			<div class="col-xs-12" align="right">
+       				<button type="button" class="btn btn-dark" (click)="onClear()">Clear</button>
+       				<button type="button" class="btn btn-primary" style="margin-left: 20px;" (click)="onQuery()" [disabled]="isClear">Query</button>
+       			</div>
+       		</div>
+ 		</form>
+  		<hr>
+ 	</div>
+ 	<app-registration
+ 		*ngFor="let event of quakeService.events"
+ 		[registration]="event"></app-registration>
+ 		
+</div>
